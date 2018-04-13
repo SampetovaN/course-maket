@@ -1,5 +1,9 @@
 # spellchecker-russian
-The implementation of levenshtein distance with n gram models. The code works with russian texts. 
+Implementation of the algorithm for automatic correction of typos
+V.V. Sampetova, V.O. Lukanina, O.D. Moskvina
+Saint Petersburg State University
+The report presents the experience of implementing the algorithm for automatic correction of typos based on the Levenstein
+distance and the n-gram model. In this paper it was suggested that typos should be considered as an incorrect input of words from any electronic device having a computer keyboard, so the algorithm takes into account the distance between the keys of the standard keyboard of the Russian language. 
 В докладе представлен опыт реализации алгоритма автоматического исправления опечаток, основанного на расстоянии Левенштейна 
 и n-граммной модели. В данной работе было выдвинуто предположение о том, что в большинстве случаев опечатки — это некорректный 
 ввод слов с любого электронного устройства, имитирующего или имеющего компьютерную клавиатуру, поэтому в алгоритме учитывалось 
