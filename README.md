@@ -4,6 +4,8 @@ V.V. Sampetova, V.O. Lukanina, O.D. Moskvina
 Saint Petersburg State University
 The report presents the experience of implementing the algorithm for automatic correction of typos based on the Levenstein
 distance and the n-gram model. In this paper it was suggested that typos should be considered as an incorrect input of words from any electronic device having a computer keyboard, so the algorithm takes into account the distance between the keys of the standard keyboard of the Russian language. 
+
+
 В докладе представлен опыт реализации алгоритма автоматического исправления опечаток, основанного на расстоянии Левенштейна 
 и n-граммной модели. В данной работе было выдвинуто предположение о том, что в большинстве случаев опечатки — это некорректный 
 ввод слов с любого электронного устройства, имитирующего или имеющего компьютерную клавиатуру, поэтому в алгоритме учитывалось 
@@ -26,6 +28,8 @@ distance and the n-gram model. In this paper it was suggested that typos should 
 при вводе: чем ближе буква находится от нужной, значит, тем меньше вероятность написать правильно, поэтому меньшее число 
 означает большую вероятность ошибки (таблица 1). В тех случаях, когда буквы в матрице совпадают, по умолчанию выбирается 
 числовое значение 0, а для дополнительного значения, которое не зависит от близости клавиш, числовое значение определяется как 
+
+
 2. Также для ввода лишней буквы или пропуска выбрано числовое значение 3, однако оно не представлено в матрице, поскольку 
 реализуется непосредственно в формуле Левенштейна. Cледующим шагом было применение спеллчекера. Каждое предложение во входном 
 тексте проходит токенизацию, осуществляемую при помощи инструментария библиотеки NLTK [6], в результате чего входной текст 
