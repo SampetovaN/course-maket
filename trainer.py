@@ -1,0 +1,132 @@
+# -*- coding: utf-8 -*- 
+# from tokenizer import condense_tokens
+from collections import defaultdict
+#from nltk.corpus import gutenberg
+#from nltk.corpus import reuters
+from tokenizer import is_word
+#from nltk.corpus import brown
+# для добавления своего корпуса
+from nltk.corpus import PlaintextCorpusReader
+import cProfile
+import _pickle as cPickle
+import os
+import sys
+
+SER_FILE = 'ser/testrus_data.pickle'
+# путь к корпусу
+RUS_CORP_PATH = './corpora_local/testrus'
+
+
+# returns a dictionary with a default value of another instance of this kind of
+# dictionary and the initial value of the dictionary at key 0 is 0.
+def get_count_dict():
+    d = defaultdict(get_count_dict)
+    d[0] = 0
+    return d
+
+
+# Creates a dictionary that will contain a dictionary for each unigram,
+# which then contains a dictionary holding the second element of a bigram,
+# each bi-gram consists of a dictionary that contains the third element of the
+# trigram. The key 0 gives the count.
+def get_counts(token_list_list):
+    counts = get_count_dict()
+    for token_list in token_list_list:
+        for i, t in enumerate(token_list):
+            counts[0] += 1
+            counts[t][0] += 1
+            if i + 1 < len(token_list):
+                counts[t][token_list[i + 1]][0] += 1
+            if i + 2 < len(token_list):
+                counts[t][token_list[i + 1]][token_list[i + 2]][0] += 1
+    return counts
+
+
+# This returns the vocab and the count dict. If they don't already
+# exists in a serialized form, they are created.
+def get_data():
+    try:
+        with open(SER_FILE, 'r') as f:
+            vocab, fld, counts = cPickle.load(f)
+            return vocab, fld, counts
+    except:
+        vocab, sents = create_data()
+        counts = get_counts(sents)
+        fld = get_fl_dict(vocab)
+        with open(SER_FILE, 'w+') as f:
+            cPickle.dump((vocab, fld, counts), f)
+        return vocab, fld, counts
+
+
+# Read the nltk gutenberg data, and create vocab and sentence list.
+def create_data():
+    vocab = set()
+    sentences = []
+    corpus1 = PlaintextCorpusReader(RUS_CORP_PATH, '.*')
+    corpora = [corpus1]
+    for C in corpora:
+        for fileid in C.fileids():
+            for sent in C.sents(fileid):
+                sent = [w.lower() for w in sent if is_word(w.encode('utf8'))]
+                # sent = condense_tokens(sent)
+                sentences.append(['<BEGIN>'] + sent)
+                for w in sent:
+                    vocab.add(w)
+    return vocab, sentences
+
+
+# Returns a dictionary where the key is the first letter and the
+# value is a list of all words that start with that letter.
+def get_fl_dict(vocab):
+    d = {}
+    keys = set()
+    for word in vocab:
+        k = word[0]
+        if k not in keys:
+            d[k] = [word]
+            keys.add(k)
+        else:
+            d[k].append(word)
+    return d
+
+
+# This calls all the methods necessary to save the
+# data to disk, and it has nice print outs.
+# This will exit with an error if the serialized
+# file already exists on disk.
+def train():
+    if os.path.isfile(SER_FILE):
+        msg = 'Error: {} already exists.\n'
+        msg += 'To force update, run \'{} -f\'\n'
+        msg = msg.format(SER_FILE, sys.argv[0])
+        sys.stderr.write(msg)
+        exit(1)
+    print ('Reading data...')
+    vocab, sents = create_data()
+ #   print vocab
+ #   print sents
+    print ('Getting counts...')
+    counts = get_counts(sents)
+    print ('Creating first letter dictionary...')
+    fld = get_fl_dict(vocab)
+    with open(SER_FILE, 'w+') as f:
+        print ('Saving...')
+        cPickle.dump((vocab, fld, counts), f)
+    print ('Done.')
+
+
+# Runs the train method.
+# The -f flag forces replace removal of the serialized file if it exists.
+# The -p flag runs this with a profiler.
+def main():
+    if '-f' in sys.argv[1:] or '-fp' in sys.argv[1:] or '-pf' in sys.argv[1:]:
+        if os.path.isfile(SER_FILE):
+            os.remove(SER_FILE)
+    if '-p' in sys.argv[1:] or '-fp' in sys.argv[1:] or '-pf' in sys.argv[1:]:
+        cProfile.run('train()')
+    else:
+        train()
+
+
+if __name__ == '__main__':
+    main()
