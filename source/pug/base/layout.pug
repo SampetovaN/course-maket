@@ -13,9 +13,14 @@ html(lang="ru")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     meta(http-equiv="X-UA-Compatible", content="ie=edge")
     meta(name="description", content= content)
+    link(rel="preload", href="fonts/PTRootUI-Bold.woff2" as='font')
+    link(rel="preload", href="fonts/PTRootUI-Medium.woff2" as='font')
+    link(rel="stylesheet", href="css/style.min.css")
     link(rel="stylesheet", href="css/style.min.css")
 
   body.body
+    +sprite()
+    if (hasHeader)
+      +header(currentPage)
+
       block main
-
-

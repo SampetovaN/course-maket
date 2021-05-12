@@ -1,4 +1,4 @@
-.DS_Store
+git add .gitignore.DS_Store
 .idea
 .vscode
 *.ai

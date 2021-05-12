@@ -1,14 +1,46 @@
 extends ../base/layout
 
+include ../components/accessories
+include ../components/features
+include ../components/video-features
+include ../components/design-list
+
+block data
+  include ../data/features
+  include ../data/video-features
+  include ../data/accessories
+  include ../data/design-list
 
 block variables
   - var title = "Курсы - тестовая страница"
   - var hasHeader = true
   - var headerMod = ""
   - var currentPage = "main"
-  - var isMainPage = true
   - var content = 'Тестовое задание. Сверстать пример макета курсов'
 
 block main
-  main
+  main.main
+    h1 Еще больше возможностей
+    section.design
+      .design__wrapper
+        h2 Новый дизайн
+        +designList(designList)
 
+    section.video
+      .video__wrapper
+        h2 Съемка видео
+        .video__content
+          .video__image
+            +img("example", "jpg", 465, 248, "Пример съемки с камеры Samsung")
+          +videoFeatures(videoFeatures)
+
+    section.accessories
+      .accessories__wrapper
+        h2 Аксессуары
+        +accessoriesList(accessories)
+
+
+    section.features
+      .features__wrapper
+        h2 Приложения и сервисы Samsung
+        +features(features)

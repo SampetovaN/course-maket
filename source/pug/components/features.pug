@@ -1,0 +1,7 @@
+mixin features(items)
+  ul.features__list
+    each item in items
+      li.features__item
+        .features__image
+          +img(item.image, item.format, 60, 60, item.alt)
+        p=item.text

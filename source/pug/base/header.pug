@@ -1,4 +1,16 @@
+include ../base/mixins
+
 mixin header(currentPage)
 
-  header
-    .header
+
+  header.header
+    nav.main-nav
+    ul.main-nav__list
+      li.main-nav__link
+        a(href="#" aria-label="Переход в магазин Эльдорадо" target='_blank')
+          +icon("sprite-eldorado", 35, 35)
+      li.main-nav__link
+        a(href="#" aria-label="Переход в магазин М-Видео" target='_blank')
+          +icon("sprite-mvideo", 40, 40)
+    span.main-nav__text Название курса в одну строку
+    button.main-nav__button(type="button" aria-label="Открыть меню")

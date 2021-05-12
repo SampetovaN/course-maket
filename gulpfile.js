@@ -88,6 +88,7 @@ gulp.task('server', function () {
     ui: false,
   });
   gulp.watch('source/pug/**/*.pug', gulp.series('pugToHtml', 'refresh'));
+  gulp.watch('source/pug/**/*.pug', gulp.series('copy', 'refresh'));
   gulp.watch('source/sass/**/*.scss', gulp.series('css'));
   gulp.watch('source/img/**/*.svg', gulp.series('sprite', 'pugToHtml', 'refresh'));
 });

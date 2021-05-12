@@ -1,0 +1,11 @@
+mixin accessoriesList(items)
+  ul.accessories__list
+    each item in items
+      if(item.image)
+        li.accessories__item
+          .accessories__image
+          +img(item.image, item.format, item.width, item.height, item.alt)
+          p=item.text
+      else
+        li.accessories__item.accessories__item--text
+          p=item.text
