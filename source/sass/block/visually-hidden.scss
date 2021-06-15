@@ -1,6 +1,0 @@
-.visually-hidden:not(:focus):not(:active),
-input[type="checkbox"],
-input[type="radio"],
-.visually-hidden {
-  @include reset-el;
-}
