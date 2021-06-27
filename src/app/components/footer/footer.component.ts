@@ -9,7 +9,7 @@ import {filter} from 'rxjs/operators';
   styleUrls: ['./footer.component.less']
 })
 export class FooterComponent implements OnInit {
-  currentRoute: boolean;
+  isAboutRoute: boolean;
   routeAbout: string = '/about'
 
   constructor(private router: Router) {
@@ -20,7 +20,7 @@ export class FooterComponent implements OnInit {
     this.router.events.pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(event => {
         if (event instanceof RouterEvent) {
-          this.currentRoute = event.url === this.routeAbout;
+          this.isAboutRoute = event.url === this.routeAbout;
         }
       });
 
