@@ -1,7 +1,0 @@
-mixin designList(items)
-  ul.design__list
-    each item, index in items
-      li(class="design__item" + (!index ? "design__item--black" : "") + (item.small ? "design__item--small" : ""))
-        .design__image
-          +img(item.image, item.format, item.width, item.height, item.alt)
-        p=item.text

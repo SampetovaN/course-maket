@@ -1,7 +1,0 @@
-mixin img(image, format, width, height, altText)
-  if (format === "svg")
-    img(src="img/" +  image + "." + format, width= width, height= height, alt= altText)
-  else
-    picture
-      source(type="image/webp", srcset="img/" +  image + "." + "webp" + " 1x, " + "img/" +  image + "@2x." + "webp" + " 2x")
-      img(src="img/" + image + "." + format, srcset= "img/" +  image + "@2x." + format + " 2x", width= width, height= height, alt= altText)
